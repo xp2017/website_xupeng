@@ -1,0 +1,20 @@
+{% extends 'post/base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+    {% for post in posts %}
+        <h2>
+            <a href="{{ post.get_absolute_url }}">
+                {{ post.title }}
+            </a>
+        </h2>
+        <P>
+        {{ post.author }}
+        </P>
+        {% thumbnail post.image '300x500' as im %}
+            <img src="{{ im.url }}">
+        {% endthumbnail %}
+        {{ post.question|truncatewords:50|linebreaks}}
+    {% endfor %}
+    {% include 'pagination.html' with page=posts %}
+{% endblock %}

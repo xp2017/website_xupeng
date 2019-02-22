@@ -1,0 +1,14 @@
+{% extends 'post/base.html' %}
+
+{% block content %}
+    {% if new_post %}
+        <h2>提问成功</h2>
+    {% else %}
+        <h2>添加新提问</h2>
+        <form action="." method="post">
+        {{ post_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="提交"></p>
+        </form>
+    {% endif %}
+{% endblock %}

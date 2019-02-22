@@ -1,0 +1,40 @@
+{% extends 'post/base.html' %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <P>
+        {{ post.author }}
+    </P>
+    <img src="{{ post.image.url }}">
+    {{ post.question|linebreaks}}
+    {% with comments.count as total_comments %}
+    <h3>
+        {{ total_comments }}条评论
+    </h3>
+
+    {% endwith %}
+    {% for comment in comments %}
+    <div>
+        <p>
+            {{ forloop.counter }} 评论者{{ comment.name }}
+
+        </p>
+        {{ comment.answer|linebreaks }}
+        编辑于{{ comment.created }}
+    </div>
+    {% empty %}
+        <p>暂无评论</p>
+    {% endfor %}
+
+    {% if new_comment %}
+        <h2>评论添加成功</h2>
+    {% else %}
+        <h2>添加新评论</h2>
+    <form action="." method="post">
+        {{ comment_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="提交"></p>
+    </form>
+    {% endif %}
+
+{% endblock %}
